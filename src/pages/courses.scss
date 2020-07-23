@@ -1,0 +1,28 @@
+.main-paper {
+  padding: 20px 5px;
+  min-height: 100px;
+}
+
+a:hover {
+  color: inherit;
+}
+
+.list-past-semester {
+  padding-left: 2rem;
+}
+
+.coursecard-container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  margin-top: 50px;
+  .no-course-centered {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+.sidebar {
+  transition: width 0.5s ease-in-out;
+  overflow-x: hidden;
+}

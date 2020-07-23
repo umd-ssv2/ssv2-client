@@ -1,0 +1,16 @@
+@import "../../index.scss";
+
+.coursecard {
+  width: 300px;
+  margin: 0.8rem 1rem;
+  .card-cta {
+    margin-top: 10px;
+    background: $umd-yellow;
+    .card-assignments {
+      padding: 0 8px;
+    }
+  }
+  &:focus {
+    border: none;
+  }
+}

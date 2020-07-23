@@ -1,0 +1,13 @@
+@import "../../index.scss";
+
+.umd-header {
+  background-color: $umd-red;
+  align-items: center;
+
+  .umd-link {
+    color: white;
+    text-decoration: none;
+    font-family: "Crimson";
+    padding: 10px;
+  }
+}
