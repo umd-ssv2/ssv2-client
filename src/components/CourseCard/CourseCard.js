@@ -9,11 +9,9 @@ import {
 import "./coursecard.scss";
 import { Link, useLocation } from "react-router-dom";
 
-const CourseCard = ({ semester, year, course }) => {
-  let location = useLocation();
-  console.log(course);
+const CourseCard = ({ term, course }) => {
   return (
-    <Link to={`/${year}/${semester}/${course.id}`} className="fixed-link">
+    <Link to={`/${term}/${course.id}`} className="fixed-link">
       <Card className="coursecard" elevation={2}>
         <CardActionArea>
           <CardContent>

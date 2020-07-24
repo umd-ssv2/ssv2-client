@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import {
   Grid,
   Container,
@@ -8,45 +8,71 @@ import {
   ListItemIcon,
   Collapse,
   ListSubheader,
+  IconButton,
   Divider,
   Paper,
 } from "@material-ui/core/";
-import {
-  HomeRounded as HomeIcon,
-  AssignmentRounded as AssignmentIcon,
-  ScheduleRounded as SemesterIcon,
-  ExpandLessRounded as ExpandLess,
-  ExpandMoreRounded as ExpandMore,
-  ChevronLeftRounded as ChevronLeft,
-} from "@material-ui/icons";
-import { Link, useRouteMatch, Switch, Route } from "react-router-dom";
-import { AssignmentList, CourseList } from "../components";
-import "./courses.scss";
+import { ChevronLeftRounded as ChevronLeft } from "@material-ui/icons";
+import { Link, Switch, Route, useHistory } from "react-router-dom";
+import { AssignmentList } from "../components";
+import { student } from "../assets/spoofData";
 
-export default function Courses(props) {
-  const [coursesOpen, setCoursesOpen] = React.useState(false);
-  // let assignmentMatch = useRouteMatch({
-  //   path: "/:year/:semester/:course",
-  // });
-  let params = props.match.params;
-
-  const toggleCourses = () => {
-    setCoursesOpen(!coursesOpen);
-  };
+const Assignments = (props) => {
+  const history = useHistory();
+  const params = props.match.params;
+  let { term, course } = params;
+  let sem = "",
+    year = "";
+  let termPattern = /^(summer|spring|winter|fall)([0-9]{4})$/i;
+  let match = term.match(termPattern);
+  let assignments = [];
+  if (match) {
+    sem = match[1];
+    year = match[2];
+    try {
+      let list = student.courses[year][sem];
+      assignments = list.find((x) => x.id === course).projects;
+    } catch (err) {
+      console.error("ERROR: ", err);
+    }
+  }
 
   return (
     <Container maxWidth="lg">
       <Grid container spacing={2}>
-        <Grid item xs={3}>
+        <Grid item xs={2}>
           <List component="nav">
-            <ListSubheader>Menu</ListSubheader>
+            <ListSubheader>
+              <IconButton component={Link} to={`/${term}/courses`}>
+                <ChevronLeft />
+              </IconButton>
+            </ListSubheader>
+            {assignments.length > 0 ? (
+              assignments.map((x, n) => {
+                return (
+                  <ListItem
+                    button
+                    key={n}
+                    onClick={() =>
+                      history.push(`/${term}/${course}/${x.projid}`)
+                    }
+                  >
+                    <ListItemText primary={`${x.title}`} />
+                  </ListItem>
+                );
+              })
+            ) : (
+              <ListItem>
+                <ListItemText>No Assignments found</ListItemText>
+              </ListItem>
+            )}
             {/* <ListItem button component={Link} to="/">
               <ListItemIcon>
                 <HomeIcon />
               </ListItemIcon>
               <ListItemText primary="Courses" />
             </ListItem> */}
-            <ListItem button onClick={toggleCourses}>
+            {/* <ListItem button onClick={toggleCourses}>
               <ListItemIcon>
                 <SemesterIcon />
               </ListItemIcon>
@@ -83,18 +109,15 @@ export default function Courses(props) {
                   />
                 </ListItem>
               </List>
-            </Collapse>
+            </Collapse> */}
           </List>
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={10}>
           <Switch>
-            <Route path="/:term/courses" component={CourseList} />
             <Route
-              path="/"
+              path="/:term/:course"
               render={(props) => (
-                <Paper className="semester-paper">
-                  <p>No semester selected</p>
-                </Paper>
+                <AssignmentList {...props} student={student} />
               )}
             />
           </Switch>
@@ -102,4 +125,6 @@ export default function Courses(props) {
       </Grid>
     </Container>
   );
-}
+};
+
+export default Assignments;

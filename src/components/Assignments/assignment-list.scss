@@ -1,0 +1,53 @@
+@import "../../index.scss";
+
+.assignment-container {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  min-height: 200px;
+}
+
+.submission-row {
+  // cursor: pointer;
+  // &:hover {
+  //   background-color: rgba(168, 168, 168, 0.25);
+  // }
+  .download-icon {
+    cursor: pointer;
+  }
+  .index-cell {
+    width: 120px;
+  }
+}
+
+.upload-paper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  padding: 2rem;
+  margin: 0.5rem;
+  border: dashed grey 2px;
+  .upload-icon {
+    font-size: 4rem;
+  }
+  #browse {
+    color: $umd-red;
+  }
+  &:hover {
+    cursor: pointer;
+    background-color: rgb(255, 243, 195);
+  }
+}
+
+.assignment-upload-fab {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  color: $umd-brown;
+  background-color: $umd-yellow;
+  &:hover {
+    background-color: rgb(202, 168, 33);
+  }
+}

@@ -17,6 +17,7 @@ const CMSC132 = {
       submissions: [
         {
           dirid: "tbeal",
+          ts: new Date(),
           file: null,
         },
       ],
@@ -42,10 +43,27 @@ const CMSC216 = {
       submissions: [
         {
           dirid: "kbeal",
+          ts: new Date(),
           file: null,
         },
         {
           dirid: "tbeal",
+          ts: new Date(),
+          file: null,
+        },
+        {
+          dirid: "tbeal",
+          ts: new Date(),
+          file: null,
+        },
+        {
+          dirid: "tbeal",
+          ts: new Date(),
+          file: null,
+        },
+        {
+          dirid: "tbeal",
+          ts: new Date(),
           file: null,
         },
       ],
