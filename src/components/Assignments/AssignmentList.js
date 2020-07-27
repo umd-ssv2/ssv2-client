@@ -1,22 +1,10 @@
 import React from "react";
-import {
-  Table,
-  TableContainer,
-  TableHead,
-  TableRow,
-  TableCell,
-  Paper,
-  TableBody,
-  Typography,
-  IconButton,
-} from "@material-ui/core";
-import { ChevronLeftRounded as ChevronLeft } from "@material-ui/icons";
-import { Link, useHistory, Route, Switch } from "react-router-dom";
+import { Paper, Typography } from "@material-ui/core";
+import { useHistory, Route, Switch } from "react-router-dom";
 import { Assignment } from "../../components";
 import "./assignment-list.scss";
 
 const AssignmentList = (props) => {
-  const history = useHistory();
   let params = props.match.params;
   let { student } = props;
   let { term, course } = params;

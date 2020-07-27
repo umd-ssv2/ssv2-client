@@ -19,25 +19,45 @@
     width: 120px;
   }
 }
+.upload-exit {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+.upload-content {
+  overflow: visible;
 
-.upload-paper {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
-  align-items: center;
-  padding: 2rem;
-  margin: 0.5rem;
-  border: dashed grey 2px;
-  .upload-icon {
-    font-size: 4rem;
+  .upload-paper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    padding: 2rem;
+    margin: 0.5rem;
+    border: dashed grey 2px;
+    .upload-icon {
+      font-size: 4rem;
+      color: grey;
+    }
+    #browse {
+      color: $umd-red;
+    }
+    .upload-result {
+      text-overflow: ellipsis;
+      max-width: 300px;
+      font-size: 0.9rem;
+      white-space: nowrap;
+      overflow: hidden;
+      margin: 10px 0;
+    }
+    &:hover {
+      cursor: pointer;
+      background-color: rgb(255, 243, 195);
+    }
   }
-  #browse {
-    color: $umd-red;
-  }
-  &:hover {
-    cursor: pointer;
-    background-color: rgb(255, 243, 195);
+  .upload-button {
+    background-color: $umd-red;
   }
 }
 
