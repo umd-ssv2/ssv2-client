@@ -9,96 +9,13 @@ import {
   TableBody,
   Fab,
   Typography,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-  Button,
-  IconButton,
 } from "@material-ui/core";
 import {
   AddRounded as AddIcon,
   CloudDownloadOutlined as DownloadIcon,
-  CloudUploadRounded as UploadIcon,
-  ClearRounded as ExitIcon,
 } from "@material-ui/icons";
+import UploadModal from "./UploadModal";
 import "./assignment-list.scss";
-
-const UploadDialog = ({ open, onClose }) => {
-  const [fileUploaded, setFileUploaded] = useState("");
-
-  function upload() {
-    console.log("uploading");
-  }
-
-  return (
-    <Dialog
-      open={open}
-      onClose={() => {
-        onClose();
-        setFileUploaded(false);
-      }}
-      fullWidth
-      maxWidth="xs"
-    >
-      <IconButton className="upload-exit" onClick={onClose}>
-        <ExitIcon fontSize="small" />
-      </IconButton>
-      <DialogTitle>New Submission</DialogTitle>
-      <DialogContent className="upload-content">
-        <DialogContentText>Upload a new file for submission</DialogContentText>
-        <Paper
-          elevation={0}
-          className="upload-paper"
-          component="label"
-          htmlFor="upload-file"
-        >
-          {fileUploaded != "" && fileUploaded != undefined ? (
-            <div>
-              File Selected: <br />
-              <p className="upload-result" title={fileUploaded}>
-                {fileUploaded}
-              </p>
-              Click to <span id="browse">browse</span> for new file
-            </div>
-          ) : (
-            <>
-              <UploadIcon className="upload-icon" />
-              <Typography variant="body1">
-                Drag and drop archive here <br /> or click to{" "}
-                <span id="browse">browse</span> files
-              </Typography>
-            </>
-          )}
-        </Paper>
-        <Button
-          className="upload-button"
-          fullWidth
-          disabled={
-            fileUploaded != "" && fileUploaded != undefined ? false : true
-          }
-          onClick={upload}
-          size="large"
-        >
-          Upload
-        </Button>
-
-        <input
-          type="file"
-          id="upload-file"
-          style={{ display: "none" }}
-          onChange={(e) => {
-            console.log(e.target.files);
-            if (e.target.files.length > 0) {
-              setFileUploaded(e.target.files[0].name);
-            }
-          }}
-          accept="zip,application/zip"
-        />
-      </DialogContent>
-    </Dialog>
-  );
-};
 
 const Assignment = (props) => {
   let [modalOpen, setModalOpen] = useState(false);
@@ -190,7 +107,7 @@ const Assignment = (props) => {
           You have no submissions
         </Typography>
       ) : null}
-      <UploadDialog open={modalOpen} onClose={toggleModal} />
+      <UploadModal open={modalOpen} onClose={toggleModal} />
     </>
   );
 };
