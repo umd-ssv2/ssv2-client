@@ -59,7 +59,14 @@ const UploadModal = ({ open, onClose }) => {
 
   function typeCheck(files) {
     console.log(files);
-    if (files[0].type !== "application/zip") {
+    // Check if environment is darwin: application/zip
+    // Check if windows: application/x-zip-compressed
+    // Check process.platform
+    console.log(process.platform);
+    if (
+      files[0].type !== "application/zip" &&
+      files[0].type !== "application/x-zip-compressed"
+    ) {
       setError("Must select a .zip file!");
       setSnack(true);
       return false;

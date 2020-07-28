@@ -44,26 +44,31 @@ const CMSC216 = {
         {
           dirid: "kbeal",
           ts: new Date(),
+          number: 1,
           file: null,
         },
         {
           dirid: "tbeal",
           ts: new Date(),
+          number: 1,
           file: null,
         },
         {
           dirid: "tbeal",
           ts: new Date(),
+          number: 2,
           file: null,
         },
         {
           dirid: "tbeal",
           ts: new Date(),
+          number: 3,
           file: null,
         },
         {
           dirid: "tbeal",
           ts: new Date(),
+          number: 4,
           file: null,
         },
       ],
