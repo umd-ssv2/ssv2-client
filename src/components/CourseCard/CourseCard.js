@@ -7,7 +7,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import "./coursecard.scss";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const CourseCard = ({ term, course }) => {
   return (
@@ -22,7 +22,7 @@ const CourseCard = ({ term, course }) => {
           </CardContent>
           <CardActions className="card-cta">
             <Typography variant="body1" className="card-assignments">
-              {course.projects.length} assignments
+              {course.projects} assignments
             </Typography>
           </CardActions>
         </CardActionArea>

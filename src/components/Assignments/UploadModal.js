@@ -18,8 +18,7 @@ import {
   CloudUploadRounded as UploadIcon,
   ClearRounded as ExitIcon,
 } from "@material-ui/icons";
-
-const uploadURL = "http://localhost:3000/proj/submission";
+import global from "./../../global";
 
 const UploadModal = ({ open, onClose }) => {
   const [files, setFiles] = useState([]);
@@ -46,7 +45,7 @@ const UploadModal = ({ open, onClose }) => {
 
     console.log("Sending upload request");
     axios
-      .post(uploadURL, data, config)
+      .post(global.serverURL, data, config) // TODO: Add :term/:course/:projid/submission
       .then((res) => {
         if (res.status == 200) {
           close();
