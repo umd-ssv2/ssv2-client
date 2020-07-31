@@ -8,7 +8,7 @@ import global from "../../global";
 
 const AssignmentList = (props) => {
   // let params = props.match.params;
-  let { getProject } = props;
+  let { getProject, newSub } = props;
   let { term, course, projid } = props.match.params;
   // let sem = "",
   //   year = "";
@@ -76,6 +76,7 @@ const AssignmentList = (props) => {
             <Assignment
               {...props}
               project={getProject(props.match.params.projid)}
+              onNewSub={newSub}
             />
           )}
         />

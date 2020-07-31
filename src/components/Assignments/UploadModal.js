@@ -20,7 +20,15 @@ import {
 } from "@material-ui/icons";
 import global from "./../../global";
 
-const UploadModal = ({ open, onClose }) => {
+const UploadModal = ({
+  open,
+  onClose,
+  onNewSub,
+  term,
+  course,
+  projid,
+  subid,
+}) => {
   const [files, setFiles] = useState([]);
   const [progress, setProgress] = useState(0);
   const [error, setError] = useState("");
@@ -45,9 +53,15 @@ const UploadModal = ({ open, onClose }) => {
 
     console.log("Sending upload request");
     axios
-      .post(global.serverURL, data, config) // TODO: Add :term/:course/:projid/submission
+      .post(
+        `${global.serverURL}/${term}/${course}/project/${projid}/submission?dirid=${global.dirid}&subid=${subid}`,
+        data,
+        config
+      ) // TODO: Add :term/:course/:projid/submission
       .then((res) => {
         if (res.status == 200) {
+          console.log("Upload Success!");
+          onNewSub(projid, res.data);
           close();
         }
       })
@@ -61,16 +75,19 @@ const UploadModal = ({ open, onClose }) => {
     // Check if environment is darwin: application/zip
     // Check if windows: application/x-zip-compressed
     // Check process.platform
-    console.log(process.platform);
     if (
-      files[0].type !== "application/zip" &&
-      files[0].type !== "application/x-zip-compressed"
+      files[0].type === "application/zip" ||
+      files[0].type === "application/x-zip-compressed"
     ) {
+      console.log("true");
+      setError("");
+      setSnack(false);
+      return true;
+    } else {
       setError("Must select a .zip file!");
       setSnack(true);
       return false;
     }
-    return true;
   }
 
   function close() {
@@ -157,15 +174,15 @@ const UploadModal = ({ open, onClose }) => {
           id="upload-file"
           style={{ display: "none" }}
           onChange={(e) => {
+            console.log("change");
             // console.log(e.target.files);
             if (e.target.files.length > 0) {
               if (typeCheck(e.target.files)) {
                 setFiles(e.target.files);
-                setError("");
               }
             }
           }}
-          accept="zip,application/zip"
+          accept="application/x-zip-compressed,application/zip"
         />
       </DialogContent>
       <Snackbar open={snackOpen} autoHideDuration={4000} onClose={snackClose}>

@@ -5,15 +5,6 @@ import "./App.scss";
 import { StylesProvider } from "@material-ui/core";
 
 class App extends Component {
-  state = {
-    courses: [],
-  };
-
-  setCourses = (courses) => {
-    console.log("i was called");
-    this.setState({ courses });
-  };
-
   render() {
     return (
       <StylesProvider injectFirst>
@@ -40,7 +31,7 @@ class App extends Component {
 </Navbar> */}
         <div className="entire-app">
           <Header />
-          <Routes courses={this.state.courses} setCourses={this.setCourses} />
+          <Routes />
           <Footer />
         </div>
       </StylesProvider>

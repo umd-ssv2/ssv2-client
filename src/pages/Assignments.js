@@ -63,6 +63,14 @@ export default class Assignments extends React.Component {
     return proj;
   };
 
+  newSub = (projid, sub) => {
+    let newProjects = [...this.state.projects];
+    let index = newProjects.findIndex((x) => x.projid == projid);
+    newProjects[index].submissions.push(sub);
+    console.log("Saving new submission in state");
+    this.setState({ projects: newProjects });
+  };
+
   render() {
     let { term, course } = this.props.match.params;
     let { projects, proj } = this.state;
@@ -104,7 +112,11 @@ export default class Assignments extends React.Component {
               <Route
                 path="/:term/:course"
                 render={(props) => (
-                  <AssignmentList {...props} getProject={this.getProject} />
+                  <AssignmentList
+                    {...props}
+                    getProject={this.getProject}
+                    newSub={this.newSub}
+                  />
                 )}
               />
             </Switch>

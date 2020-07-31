@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import axios from "axios";
+import fileDownload from "js-file-download";
 import {
   Table,
   TableContainer,
@@ -9,103 +11,51 @@ import {
   TableBody,
   Fab,
   Typography,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-  Button,
   IconButton,
+  Snackbar,
 } from "@material-ui/core";
+import { Alert } from "@material-ui/lab";
 import {
   AddRounded as AddIcon,
   CloudDownloadOutlined as DownloadIcon,
-  CloudUploadRounded as UploadIcon,
-  ClearRounded as ExitIcon,
 } from "@material-ui/icons";
 import "./assignment-list.scss";
-
-const UploadDialog = ({ open, onClose }) => {
-  const [fileUploaded, setFileUploaded] = useState("");
-
-  function upload() {
-    console.log("uploading");
-  }
-
-  return (
-    <Dialog
-      open={open}
-      onClose={() => {
-        onClose();
-        setFileUploaded(false);
-      }}
-      fullWidth
-      maxWidth="xs"
-    >
-      <IconButton className="upload-exit" onClick={onClose}>
-        <ExitIcon fontSize="small" />
-      </IconButton>
-      <DialogTitle>New Submission</DialogTitle>
-      <DialogContent className="upload-content">
-        <DialogContentText>Upload a new file for submission</DialogContentText>
-        <Paper
-          elevation={0}
-          className="upload-paper"
-          component="label"
-          htmlFor="upload-file"
-        >
-          {fileUploaded != "" && fileUploaded != undefined ? (
-            <div>
-              File Selected: <br />
-              <p className="upload-result" title={fileUploaded}>
-                {fileUploaded}
-              </p>
-              Click to <span id="browse">browse</span> for new file
-            </div>
-          ) : (
-            <>
-              <UploadIcon className="upload-icon" />
-              <Typography variant="body1">
-                Drag and drop archive here <br /> or click to{" "}
-                <span id="browse">browse</span> files
-              </Typography>
-            </>
-          )}
-        </Paper>
-        <Button
-          className="upload-button"
-          fullWidth
-          disabled={
-            fileUploaded != "" && fileUploaded != undefined ? false : true
-          }
-          onClick={upload}
-          size="large"
-        >
-          Upload
-        </Button>
-
-        <input
-          type="file"
-          id="upload-file"
-          style={{ display: "none" }}
-          onChange={(e) => {
-            console.log(e.target.files);
-            if (e.target.files.length > 0) {
-              setFileUploaded(e.target.files[0].name);
-            }
-          }}
-          accept="zip,application/zip"
-        />
-      </DialogContent>
-    </Dialog>
-  );
-};
+import UploadDialog from "./UploadModal";
+import global from "../../global";
 
 const Assignment = (props) => {
+  const [snackOpen, setSnack] = useState(false);
   let [modalOpen, setModalOpen] = useState(false);
-  let { project } = props;
+  let { project, match, onNewSub } = props;
+  let { term, course, projid } = match.params;
 
   const toggleModal = () => {
     setModalOpen(!modalOpen);
+  };
+
+  const downloadSubmission = (subid) => {
+    window.open(
+      `${global.serverURL}/${term}/${course}/project/${projid}/submission/${subid}?dirid=${global.dirid}`
+    );
+    // axios
+    //   .get(
+    //     `${global.serverURL}/${term}/${course}/project/${projid}/submission/${subid}?dirid=${global.dirid}`
+    //   ) // TODO: Add :term/:course/:projid/submission
+    //   .then((res) => {
+    //     // setSnack(false);
+    //     // fileDownload(res.data, `submission-${subid}.zip`);
+
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
+  };
+
+  const snackClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setSnack(false);
   };
 
   return (
@@ -135,24 +85,33 @@ const Assignment = (props) => {
               </TableHead>
               <TableBody>
                 {project.submissions.length > 0
-                  ? project.submissions.map((x, n) => {
-                      console.log(x);
-                      return (
-                        <TableRow key={n} className="submission-row">
-                          <TableCell className="index-cell">
-                            {x.number}
-                          </TableCell>
-                          <TableCell>{x.ts}</TableCell>
-                          <TableCell>n/a </TableCell>
-                          <TableCell style={{ paddingLeft: "2rem" }}>
-                            <DownloadIcon
-                              fontSize="default"
-                              className="download-icon"
-                            />
-                          </TableCell>
-                        </TableRow>
-                      );
-                    })
+                  ? project.submissions
+                      .sort((d1, d2) => {
+                        let a = new Date(Date.parse(d1)),
+                          b = new Date(Date.parse(d2));
+                        return a < b ? -1 : a > b ? 1 : 0;
+                      })
+                      .map((x, n) => {
+                        return (
+                          <TableRow key={n} className="submission-row">
+                            <TableCell className="index-cell">
+                              {n + 1}
+                            </TableCell>
+                            <TableCell>{x.ts}</TableCell>
+                            <TableCell>n/a </TableCell>
+                            <TableCell style={{ paddingLeft: "2rem" }}>
+                              <IconButton
+                                onClick={() => downloadSubmission(n + 1)}
+                              >
+                                <DownloadIcon
+                                  fontSize="default"
+                                  className="download-icon"
+                                />
+                              </IconButton>
+                            </TableCell>
+                          </TableRow>
+                        );
+                      })
                   : null}
               </TableBody>
             </Table>
@@ -166,7 +125,26 @@ const Assignment = (props) => {
               You have no submissions
             </Typography>
           ) : null}
-          <UploadDialog open={modalOpen} onClose={toggleModal} />
+          <UploadDialog
+            open={modalOpen}
+            onClose={toggleModal}
+            onNewSub={onNewSub}
+            term={term}
+            course={course}
+            projid={projid}
+            subid={project.submissions.length + 1}
+          />
+          <Snackbar open={snackOpen} onClose={snackClose}>
+            <Alert
+              variant="filled"
+              elevation={6}
+              onClose={snackClose}
+              severity="info"
+              style={{ backgroundColor: "#ffd200", color: "black" }}
+            >
+              Downloading Submission...
+            </Alert>
+          </Snackbar>
         </>
       ) : null}
     </>
