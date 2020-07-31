@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import axios from "axios";
-import fileDownload from "js-file-download";
 import {
   Table,
   TableContainer,
@@ -37,18 +36,6 @@ const Assignment = (props) => {
     window.open(
       `${global.serverURL}/${term}/${course}/project/${projid}/submission/${subid}?dirid=${global.dirid}`
     );
-    // axios
-    //   .get(
-    //     `${global.serverURL}/${term}/${course}/project/${projid}/submission/${subid}?dirid=${global.dirid}`
-    //   ) // TODO: Add :term/:course/:projid/submission
-    //   .then((res) => {
-    //     // setSnack(false);
-    //     // fileDownload(res.data, `submission-${subid}.zip`);
-
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
   };
 
   const snackClose = (event, reason) => {
