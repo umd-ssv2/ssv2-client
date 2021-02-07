@@ -1,36 +1,56 @@
 import React, { Component } from "react";
-import "./login.css";
+import {
+  Button,
+  Typography,
+  Card,
+  CardMedia,
+  CardContent,
+  CardActions,
+  CardHeader,
+  Container,
+} from "@material-ui/core";
+import "./login.scss";
 
 export default class Login extends Component {
-
-  componentDidMount() {
-    document.body.classList.add('login-body');
-  }
-
-  componentWillUnmount() {
-    document.body.classList.remove('login-body');
-  }
-
-  handleLogin = event => {
+  handleLogin = (event) => {
     event.preventDefault();
-    localStorage.setItem('lastRoute', window.location.pathname);
-    console.log('clicked!!')
-    window.location.href = `http://localhost:3000/cas_login`;
+    let lastRoute = window.location.href;
+    localStorage.setItem("lastRoute", lastRoute);
+    window.location.href = `http://localhost:3000/cas_login?service=${lastRoute}/2020/summer`;
     //window.location.href = 'http://www.row2k.com'
   };
 
   render() {
     return (
-      <div className="login">
-        <div className="lander">
-          <h1>Submit Server 2.0</h1>
-          <div className="login-btn-box login-btn">
-              <a className="btn btn-info btn-lg cas-btn" role="button" onClick={this.handleLogin}>
-                CAS Login
-              </a>
-            </div>
+      <Container maxWidth="lg">
+        <div className="login">
+          <Card className="login-card">
+            <CardHeader title="UMD CS Submission Server 2.0"></CardHeader>
+            <CardMedia
+              component="img"
+              alt="UMD CS Department Logo"
+              image={require("./assets/images/cs_dept_logo.png")}
+              title="Contemplative Reptile"
+            />
+            <CardContent>
+              <Typography variant="body2" color="textSecondary" component="p">
+                Log in with your University of Maryland account by clicking the
+                "UMD CAS Login" button.
+              </Typography>
+            </CardContent>
+            <CardActions>
+              <Button
+                size="large"
+                className="cas-btn"
+                onClick={this.handleLogin}
+                fullWidth
+              >
+                UMD CAS Login
+              </Button>
+            </CardActions>
+          </Card>
         </div>
-      </div>
+      </Container>
     );
   }
 }

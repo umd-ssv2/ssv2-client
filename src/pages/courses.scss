@@ -1,0 +1,18 @@
+a:hover {
+  color: inherit;
+}
+
+.list-past-semester {
+  padding-left: 2rem;
+}
+
+.sidebar {
+  transition: width 0.5s ease-in-out;
+  overflow-x: hidden;
+}
+
+.semester-paper {
+  padding: 35px;
+  height: 100px;
+  text-align: center;
+}

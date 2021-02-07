@@ -1,0 +1,13 @@
+.entire-app {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 44px auto 60px;
+  row-gap: 40px;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.fixed-link {
+  text-decoration: none !important;
+  color: inherit !important;
+}

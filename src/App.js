@@ -1,15 +1,14 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import { Navbar, NavDropdown, FormControl, Nav, Button, Form } from 'react-bootstrap';
 import Routes from "./routes";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import "./App.css";
+import { Header, Footer } from "./components";
+import "./App.scss";
+import { StylesProvider } from "@material-ui/core";
 
 class App extends Component {
   render() {
     return (
-      <div>
-      <Navbar bg="light" expand="lg">
+      <StylesProvider injectFirst>
+        {/* <Navbar bg="light" expand="lg">
   <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
   <Navbar.Toggle aria-controls="basic-navbar-nav" />
   <Navbar.Collapse id="basic-navbar-nav">
@@ -29,10 +28,13 @@ class App extends Component {
       <Button variant="outline-success">Search</Button>
     </Form>
   </Navbar.Collapse>
-</Navbar>
-      <Routes />
-      </div>
-
+</Navbar> */}
+        <div className="entire-app">
+          <Header />
+          <Routes />
+          <Footer />
+        </div>
+      </StylesProvider>
     );
   }
 }

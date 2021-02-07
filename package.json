@@ -3,12 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^4.11.0",
+    "@material-ui/icons": "^4.9.1",
+    "@material-ui/lab": "^4.0.0-alpha.56",
+    "axios": "^0.19.2",
     "bootstrap": "^4.3.1",
     "formik": "^1.5.8",
     "jquery": "^3.4.1",
+    "node-sass": "^4.14.1",
     "popper.js": "^1.15.0",
     "react": "^16.8.6",
-    "react-bootstrap": "^1.0.0-beta.10",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.1",
     "unstated": "^2.1.1",
@@ -18,7 +22,7 @@
     "react-scripts": "3.0.1"
   },
   "scripts": {
-    "start": "PORT=4000 react-scripts start",
+    "start": "set PORT=4000 && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
