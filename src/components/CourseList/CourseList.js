@@ -32,7 +32,7 @@ export default class CourseList extends React.Component {
             this.setState({
               sem: match[1],
               year: match[2],
-              courseList: res.data.courseList,
+              courseList: res.data?.courseList,
               term: term,
               loading: false,
             });
@@ -70,7 +70,7 @@ export default class CourseList extends React.Component {
                 : `Error: No semester found called '${term}'`}
             </Typography>
             <div className="coursecard-container">
-              {courseList.length > 0 ? (
+              {courseList?.length > 0 ? (
                 courseList.map((x, n) => (
                   <CourseCard term={term} course={x} key={n} />
                 ))

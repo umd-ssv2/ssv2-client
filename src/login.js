@@ -17,7 +17,6 @@ export default class Login extends Component {
     let lastRoute = window.location.href;
     localStorage.setItem("lastRoute", lastRoute);
     window.location.href = `http://localhost:3000/cas_login?service=${lastRoute}/2020/summer`;
-    //window.location.href = 'http://www.row2k.com'
   };
 
   render() {
